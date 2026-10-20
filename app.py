@@ -7,7 +7,8 @@ Como rodar no computador:
 Depois abra http://localhost:5000 no navegador.
 
 A chave do Roboflow fica no arquivo .env (que NÃO vai para o GitHub).
-Na hospedagem (Render), ela é cadastrada como variável de ambiente ROBOFLOW_API_KEY.
+Na hospedagem (Vercel), ela é cadastrada como variável de ambiente ROBOFLOW_API_KEY.
+A página (index.html) e o logo ficam na pasta public/.
 """
 
 import os
@@ -57,6 +58,7 @@ PORTA = int(os.environ.get("PORT", 5000))
 # =====================================================================
 
 app = Flask(__name__, static_folder=None)
+PASTA_PUBLICA = Path(__file__).with_name("public")
 
 
 def configuracao_preenchida():
@@ -65,12 +67,12 @@ def configuracao_preenchida():
 
 @app.get("/")
 def pagina():
-    return send_from_directory(app.root_path, "index.html")
+    return send_from_directory(PASTA_PUBLICA, "index.html")
 
 
 @app.get("/logo.png")
 def logo():
-    return send_from_directory(app.root_path, "logo.png")
+    return send_from_directory(PASTA_PUBLICA, "logo.png")
 
 
 @app.get("/config")
